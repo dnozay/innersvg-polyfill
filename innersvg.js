@@ -2,6 +2,12 @@
  * innerHTML property for SVGElement
  * Copyright(c) 2010, Jeff Schiller
  *
+ * Licensed under the Apache License, Version 2
+ *
+ * Works For Me in WebKit and Mozilla.
+ * Does not work in Opera since it doesn't support the SVGElement interface.
+ *
+ * I haven't decided on the best name for this property - thus the duplication.
  */
 
 // TODO: Write unit tests.
