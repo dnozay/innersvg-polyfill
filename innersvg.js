@@ -4,8 +4,8 @@
  *
  * Licensed under the Apache License, Version 2
  *
- * Works For Me in WebKit and Mozilla.
- * Does not work in Opera since it doesn't support the SVGElement interface.
+ * Works For Me in WebKit, Mozilla and IE9.
+ * Does not work in Opera since it doesn't support the SVGElement interface yet.
  *
  * I haven't decided on the best name for this property - thus the duplication.
  */
