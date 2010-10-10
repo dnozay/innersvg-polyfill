@@ -12,7 +12,7 @@
 
 <svg xmlns="http://www.w3.org/2000/svg">
 <g id="g">
-  <rect id="r" width="200" height="100" fill='red'/>
+  <rect id="r" width="200" height="100" fill='red'></rect>
   <text x="400" y="100">
     Another &lt;text&gt; element...
   </text>
@@ -25,7 +25,7 @@
 <script>
 function go() {
   var g = document.getElementById('g');
-  g.innerHTML = '<circle cx=\'50\' cy=\'50\' r=\'20\' fill=\'green\'/>';
+  g.innerHTML = '<!-- test --><circle cx=\'50\' cy=\'50\' r=\'20\' fill=\'green\'></circle>';
   document.getElementById('t').innerSVG = 'PASS';
 }
 </script>

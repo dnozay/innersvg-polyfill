@@ -4,7 +4,7 @@
   <title>Automated tests for innersvg</title>
   <link rel="stylesheet" href="qunit.css" type="text/css"/>
   <script type="text/javascript" src="qunit.js"></script>
-  <script type="text/javascript" src="../innersvg.js"></script><p></p>
+  <script type="text/javascript" src="../innersvg.js"></script>
   <script type="text/javascript">
   window.onload = function() {
     // log function
@@ -54,16 +54,18 @@
 
     // We will only test innerHTML from here on out.
 
-    test('creating elements using innerHTML', 10, function() {
+    test('creating elements using innerHTML', 12, function() {
       reset();
-      g.innerHTML = '<circle id="c" r="40" fill="red"/><rect id="r" width="200" height="100" fill="blue"/>';
+      g.innerHTML = '<circle id="c" r="40" fill="red"></circle><rect id="r" width="200" height="100" fill="blue"></rect>';
       ok(g.hasChildNodes() == true, 'g has children');
       ok(g.childNodes.length == 2, 'g has 2 children');
       ok(g.firstChild != null, 'first child was non-null');
+      ok(g.firstChild.namespaceURI == svgns, 'first child has SVG namespace');
       ok(g.firstChild.nodeType == 1, 'first child was an element');
       ok(g.firstChild.tagName == 'circle', 'first child was a circle');
       ok(g.firstChild.id == 'c', 'first child had an id');
       ok(g.lastChild != null, 'second child was non-null');
+      ok(g.lastChild.namespaceURI == svgns, 'second child has SVG namespace');
       ok(g.lastChild.nodeType == 1, 'second child was an element');
       ok(g.lastChild.tagName == 'rect', 'second child was a rect');
       ok(g.lastChild.id == 'r', 'second child had an id');
@@ -71,15 +73,15 @@
 
     test('clearing innerHTML', 2, function() {
       reset();
-      g.innerHTML = '<circle id="c" r="40" fill="red"/><rect id="r" width="200" height="100" fill="blue"/>';
+      g.innerHTML = '<circle id="c" r="40" fill="red"></circle><rect id="r" width="200" height="100" fill="blue"></rect>';
       ok(g.childNodes.length == 2, 'g has 2 children');
       g.innerHTML = '';
       ok(g.hasChildNodes() == false, 'g has no children');
     });
 
-    test('creating text nodes using innerHTML', 7, function() {
+    test('text nodes', 8, function() {
       reset();
-      g.innerHTML = '<text/>';
+      g.innerHTML = '<text></text>';
       g.firstChild.innerHTML = 'Test text';
 
       ok(g.childNodes.length == 1, 'g had one child');
@@ -89,8 +91,18 @@
       ok(g.firstChild.firstChild.nodeType == 3, 'first child of text was a text node');
       ok(g.firstChild.firstChild.nodeName == '#text', 'first child of text had a node name of #text');
       ok(g.firstChild.firstChild.nodeValue == 'Test text', 'first child of text was set properly');
+      ok(g.firstChild.innerHTML == 'Test text', 'text node serialized properly');
     });
 
+    test('comment nodes', 5, function() {
+      reset();
+      g.innerHTML = '<!--Test comment--><circle r="40"></circle>';
+      ok(g.childNodes.length == 2, 'g had two children');
+      ok(g.firstChild.nodeType == 8, 'first child was a comment');
+      ok(g.firstChild.nodeName == '#comment', 'comment had a node name of #comment');
+      ok(g.firstChild.nodeValue == 'Test comment', 'comment had proper nodeValue');
+      ok(g.innerHTML.substr(0, 19) == '<!--Test comment-->', 'comment node serialized properly');
+    });
   };
   </script>  
 </head>

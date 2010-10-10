@@ -4,13 +4,12 @@
  *
  * Licensed under the Apache License, Version 2
  *
- * Works For Me in Chrome 6, Safari 5, Firefox 4 and IE9.
+ * Works in a SVG document in Chrome 6+, Safari 5+, Firefox 4+ and IE9+.
+ * Works in a HTML5 document in Chrome 7+, Firefox 4+ and IE9+.
  * Does not work in Opera since it doesn't support the SVGElement interface yet.
  *
  * I haven't decided on the best name for this property - thus the duplication.
  */
-
-// TODO: Write unit tests.
 
 (function() {
 var serializeXML = function(node, output) {
@@ -38,15 +37,16 @@ var serializeXML = function(node, output) {
     } else {
       output.push('/>');
     }
+  } else if (nodeType == 8) {
+    // TODO(codedread): Replace special characters with XML entities?
+    output.push('<!--', node.nodeValue, '-->');
   } else {
-    // TODO: Handle COMMENT nodes.
     // TODO: Handle CDATA nodes.
     // TODO: Handle ENTITY nodes.
     // TODO: Handle DOCUMENT nodes.
-    alert('Unknown type of element: ' + nodeType);
+    throw 'Error serializing XML. Unhandled node of type: ' + nodeType;
   }
 }
-
 // The innerHTML DOM property for SVGElement.
 Object.defineProperty(SVGElement.prototype, 'innerHTML', {
   get: function() {
