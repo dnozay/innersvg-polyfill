@@ -2,7 +2,104 @@
 <html>
 <head>
   <title>Automated tests for innersvg</title>
+  <link rel="stylesheet" href="qunit.css" type="text/css"/>
+  <script type="text/javascript" src="qunit.js"></script>
+  <script type="text/javascript" src="../innersvg.js"></script><p></p>
+  <script type="text/javascript">
+  window.onload = function() {
+    // log function
+    QUnit.log = function(result, message) {
+      if (window.console && window.console.log) {
+        window.console.log(result +' :: '+ message);
+      }
+    };
+
+    var svgroot;
+    var g;
+
+    var svgns = 'http://www.w3.org/2000/svg';
+    (function() {
+      svgroot = document.createElementNS(svgns, 'svg');
+      g = document.createElementNS(svgns, 'g');
+      svgroot.appendChild(g);
+      document.getElementById('svg').appendChild(svgroot);
+    }());
+
+    function reset() {
+      while (g.hasChildNodes()) {
+        g.removeChild(g.firstChild);
+      }
+    };
+
+    module('basic tests');
+
+    test('browser supports SVG', 2, function() {
+      ok(svgroot.namespaceURI == svgns, 'SVG namespace supported');
+      ok(SVGElement != undefined, 'SVGElement interface supported');
+    });
+
+    test('properties present', 6, function() {
+      ok(svgroot.innerHTML != undefined, 'innerHTML present on SVGSVGElement');
+      ok(g.innerHTML != undefined, 'innerHTML present on SVGGElement');
+      ok(svgroot.innerSVG != undefined, 'innerSVG present on SVGSVGElement');
+      ok(g.innerSVG != undefined, 'innerSVG present on SVGGElement');
+      ok(svgroot.innerHTML == svgroot.innerSVG, 'innerHTML equal to innerSVG');
+      ok(g.innerHTML == g.innerSVG, 'innerHTML equal to innerSVG');
+    });
+
+    test('innerHTML/SVG empty on empty element', 2, function() {
+      ok(g.innerHTML == '', 'innerHTML empty string on empty element');
+      ok(g.innerSVG == '', 'innerSVG empty string on empty element');
+    });
+
+    // We will only test innerHTML from here on out.
+
+    test('creating elements using innerHTML', 10, function() {
+      reset();
+      g.innerHTML = '<circle id="c" r="40" fill="red"/><rect id="r" width="200" height="100" fill="blue"/>';
+      ok(g.hasChildNodes() == true, 'g has children');
+      ok(g.childNodes.length == 2, 'g has 2 children');
+      ok(g.firstChild != null, 'first child was non-null');
+      ok(g.firstChild.nodeType == 1, 'first child was an element');
+      ok(g.firstChild.tagName == 'circle', 'first child was a circle');
+      ok(g.firstChild.id == 'c', 'first child had an id');
+      ok(g.lastChild != null, 'second child was non-null');
+      ok(g.lastChild.nodeType == 1, 'second child was an element');
+      ok(g.lastChild.tagName == 'rect', 'second child was a rect');
+      ok(g.lastChild.id == 'r', 'second child had an id');
+    });
+
+    test('clearing innerHTML', 2, function() {
+      reset();
+      g.innerHTML = '<circle id="c" r="40" fill="red"/><rect id="r" width="200" height="100" fill="blue"/>';
+      ok(g.childNodes.length == 2, 'g has 2 children');
+      g.innerHTML = '';
+      ok(g.hasChildNodes() == false, 'g has no children');
+    });
+
+    test('creating text nodes using innerHTML', 7, function() {
+      reset();
+      g.innerHTML = '<text/>';
+      g.firstChild.innerHTML = 'Test text';
+
+      ok(g.childNodes.length == 1, 'g had one child');
+      ok(g.firstChild.nodeType == 1, 'g had an element child');
+      ok(g.firstChild.nodeName == 'text', 'g had a text child');
+      ok(g.firstChild.firstChild != null, 'first child of text was non-null');
+      ok(g.firstChild.firstChild.nodeType == 3, 'first child of text was a text node');
+      ok(g.firstChild.firstChild.nodeName == '#text', 'first child of text had a node name of #text');
+      ok(g.firstChild.firstChild.nodeValue == 'Test text', 'first child of text was set properly');
+    });
+
+  };
+  </script>  
 </head>
 <body>
+  <h1 id="qunit-header">innersvg unit tests</h1>
+  <h2 id="qunit-banner"></h2>
+  <h2 id="qunit-userAgent"></h2>
+  <ol id="qunit-tests">
+  </ol>
+  <div id="svg" style="visibility:hidden;position:absolute;overflow:hidden;"></div>
 </body>
 </html>

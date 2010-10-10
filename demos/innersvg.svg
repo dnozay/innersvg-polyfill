@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" onload="go()">
-<script xlink:href="innersvg.js"/>
+<script xlink:href="../innersvg.js"/>
 
 <text x="20" y="20">
   You should see a green circle and the word PASS below
