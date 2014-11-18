@@ -19,7 +19,8 @@
     "SVG",
     "SVGElement"
   ],
-  "author": "Damien Nozay <damien.nozay@gmail.com> (https://github.com/dnozay)",
+  "author": "Jeff Schiller <codedread@gmail.com> (https://github.com/codedread)",
+  "maintainer": "Damien Nozay <damien.nozay@gmail.com> (https://github.com/dnozay)",
   "license": "Apache License, version 2",
   "bugs": {
     "url": "https://github.com/dnozay/innersvg-polyfill/issues"

@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "homepage": "https://github.com/dnozay/innersvg-polyfill",
   "authors": [
+    "Jeff Schiller <codedread@gmail.com>"
+  ],
+  "maintainers": [
     "Damien Nozay <damien.nozay@gmail.com>"
   ],
   "description": "innerHTML polyfill for SVGElement",
