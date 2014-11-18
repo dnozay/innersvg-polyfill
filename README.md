@@ -21,3 +21,9 @@ Sample Code
     <g id="foo"/>
 
     document.getElementId("foo").innerHTML = "<circle r='40' fill='green'/>";
+
+
+License
+=======
+
+Apache License, Version 2.0
