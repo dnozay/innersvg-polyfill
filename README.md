@@ -1,7 +1,7 @@
 innersvg-polyfill
 =================
 
-mirror for https://code.google.com/p/innersvg/
+mirror for https://code.google.com/p/innersvg/ + some files to make the package available in [npm](https://www.npmjs.com/package/innersvg-polyfill) and bower.
 
 
 Introduction
