@@ -69,7 +69,7 @@ Object.defineProperty(SVGElement.prototype, 'innerHTML', {
       var dXML = new DOMParser();
       dXML.async = false;
       // Wrap the markup into a SVG node to ensure parsing works.
-      sXML = '<svg xmlns=\'http://www.w3.org/2000/svg\'>' + markupText + '</svg>';
+      var sXML = '<svg xmlns=\'http://www.w3.org/2000/svg\'>' + markupText + '</svg>';
       var svgDocElement = dXML.parseFromString(sXML, 'text/xml').documentElement;
 
       // Now take each node, import it and append to this element.
