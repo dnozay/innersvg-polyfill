@@ -48,50 +48,54 @@ var serializeXML = function(node, output) {
   }
 }
 // The innerHTML DOM property for SVGElement.
-Object.defineProperty(SVGElement.prototype, 'innerHTML', {
-  get: function() {
-    var output = [];
-    var childNode = this.firstChild;
-    while (childNode) {
-      serializeXML(childNode, output);
-      childNode = childNode.nextSibling;
-    }
-    return output.join('');
-  },
-  set: function(markupText) {
-    // Wipe out the current contents of the element.
-    while (this.firstChild) {
-      this.removeChild(this.firstChild);
-    }
-
-    try {
-      // Parse the markup into valid nodes.
-      var dXML = new DOMParser();
-      dXML.async = false;
-      // Wrap the markup into a SVG node to ensure parsing works.
-      var sXML = '<svg xmlns=\'http://www.w3.org/2000/svg\' xmlns:xlink=\'http://www.w3.org/1999/xlink\'>' + markupText + '</svg>';
-      var svgDocElement = dXML.parseFromString(sXML, 'text/xml').documentElement;
-
-      // Now take each node, import it and append to this element.
-      var childNode = svgDocElement.firstChild;
-      while(childNode) {
-        this.appendChild(this.ownerDocument.importNode(childNode, true));
+if (!SVGElement.prototype.innerHTML) {
+  Object.defineProperty(SVGElement.prototype, 'innerHTML', {
+    get: function() {
+      var output = [];
+      var childNode = this.firstChild;
+      while (childNode) {
+        serializeXML(childNode, output);
         childNode = childNode.nextSibling;
       }
-    } catch(e) {
-      throw new Error('Error parsing XML string');
-    };
-  }
-});
+      return output.join('');
+    },
+    set: function(markupText) {
+      // Wipe out the current contents of the element.
+      while (this.firstChild) {
+        this.removeChild(this.firstChild);
+      }
+
+      try {
+        // Parse the markup into valid nodes.
+        var dXML = new DOMParser();
+        dXML.async = false;
+        // Wrap the markup into a SVG node to ensure parsing works.
+        var sXML = '<svg xmlns=\'http://www.w3.org/2000/svg\' xmlns:xlink=\'http://www.w3.org/1999/xlink\'>' + markupText + '</svg>';
+        var svgDocElement = dXML.parseFromString(sXML, 'text/xml').documentElement;
+
+        // Now take each node, import it and append to this element.
+        var childNode = svgDocElement.firstChild;
+        while(childNode) {
+          this.appendChild(this.ownerDocument.importNode(childNode, true));
+          childNode = childNode.nextSibling;
+        }
+      } catch(e) {
+        throw new Error('Error parsing XML string');
+      };
+    }
+  });
+}
 
 // The innerSVG DOM property for SVGElement.
-Object.defineProperty(SVGElement.prototype, 'innerSVG', {
-  get: function() {
-    return this.innerHTML;
-  },
-  set: function(markupText) {
-    this.innerHTML = markupText;
-  }
-});
+if (!SVGElement.prototype.innerSVG) {
+  Object.defineProperty(SVGElement.prototype, 'innerSVG', {
+    get: function() {
+      return this.innerHTML;
+    },
+    set: function(markupText) {
+      this.innerHTML = markupText;
+    }
+  });
+}
 
 })();
