@@ -1,6 +1,6 @@
 {
   "name": "innersvg-polyfill",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "innerHTML polyfill for SVGElement",
   "main": "innersvg.js",
   "directories": {
