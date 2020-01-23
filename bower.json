@@ -1,6 +1,6 @@
 {
   "name": "innersvg-polyfill",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "homepage": "https://github.com/dnozay/innersvg-polyfill",
   "authors": [
     "Jeff Schiller <codedread@gmail.com>"
